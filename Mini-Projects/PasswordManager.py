@@ -1,19 +1,20 @@
 from cryptography.fernet import Fernet as ft
-#"abdullah@gmail.com", "Hassan@gmail.com"
-#"123@#", "Ha55an"
+
 emails = []
 passwords = []
 
 def main():
-    
     key = input("Enter the key : ")
     fileKey = loadKey()
     key = fileKey + key.encode()
     fer = ft(key)
-    # add()
     load(fer)
-    view()
-    store(fer)
+    while(True):
+        choice = int(input("1. Add new password\n2. Show all passwords\n"))
+        if(choice == 1):
+            add()
+        elif(choice == 2):
+            view()
     
 def loadKey():
     file = open("key.key", 'rb')
@@ -30,16 +31,12 @@ def add():
     password = input("Enter the password : ")
     emails.append(email)
     passwords.append(password)
-    
-def store(fer):
-    file = open("data.txt", 'w')
-    for i in range(0, len(emails)):
-        file.write(emails[i] + "," + str(fer.encrypt(passwords[i].encode())) + "\n")
+    file = open("data.txt", 'a')
+    file.write(email + "," + fer.encrypt(password.encode()).decode() + "\n")
     file.close()
     
 def parse(line):
     line = line.split(',')
-    print(line)
     if(line != ''):
         return line[0], line[1]
     else:
@@ -48,7 +45,6 @@ def parse(line):
 def load(fer):
     file = open("data.txt", 'r')
     data = file.read().split('\n')
-    print(data)
     for i in data:
         if(i != data[-1]):
             line1, line2 = parse(i)
