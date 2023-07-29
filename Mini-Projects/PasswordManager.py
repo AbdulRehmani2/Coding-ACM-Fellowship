@@ -5,14 +5,13 @@ passwords = []
 
 def main():
     key = input("Enter the key : ")
-    fileKey = loadKey()
-    key = fileKey + key.encode()
-    fer = ft(key)
+    fileKey = loadKey() + key.encode()
+    fer = ft(fileKey)
     load(fer)
     while(True):
         choice = int(input("1. Add new password\n2. Show all passwords\n"))
         if(choice == 1):
-            add()
+            add(fer)
         elif(choice == 2):
             view()
     
@@ -26,7 +25,7 @@ def view():
     for i in range(0, len(emails)):
         print(f"Email : {emails[i]} || Password : {passwords[i]}")
         
-def add():
+def add(fer):
     email = input("Enter the email : ")
     password = input("Enter the password : ")
     emails.append(email)
